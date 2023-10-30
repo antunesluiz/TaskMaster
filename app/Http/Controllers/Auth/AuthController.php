@@ -42,8 +42,25 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout(): JsonResponse
+    public function logout() : JsonResponse
     {
         return $this->authService->logout();
+    }
+
+    /**
+     * Register a new user and generate an authentication token.
+     * 
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request) : JsonResponse|array
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
+    
+        return $this->authService->register($validatedData);
     }
 }

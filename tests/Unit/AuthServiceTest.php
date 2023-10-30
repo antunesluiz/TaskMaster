@@ -42,3 +42,18 @@ it('cannout logout the user', function () {
    $response->assertJson(['message' => 'Unauthenticated.'])
       ->assertStatus(401);
 });
+
+it('can register a new user', function () {
+   $user = User::factory()->make();
+
+   $result = (new AuthService(new UserRepository()))->register([
+      'name' => $user->name,
+      'email' => $user->email,
+      'password' => $user->password,
+   ]);
+
+   expect($result)->toHaveKey('user');
+   expect($result)->toHaveKey('token');
+   expect($result['user']->name)->toBe($user->name);
+   expect($result['user']->email)->toBe($user->email);
+});

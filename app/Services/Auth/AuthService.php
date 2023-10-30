@@ -2,9 +2,11 @@
 
 namespace App\Services\Auth;
 
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthService
 {
@@ -52,5 +54,24 @@ class AuthService
         auth()->user()->currentAccessToken()->delete();
         
         return response()->json(['message' => 'Logged out successfully'], 200);
+    }
+
+    /**
+     * Register a new user and generate an authentication token.
+     *
+     * @param array $validatedData An array containing the 'name', 'email', and 'password'.
+     * @return array Returns an array with a 'user' object and a 'token' string.
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function register(array $validatedData): array
+    {
+        $user = $this->userRepository->create($validatedData);
+
+        $token = $user->createToken('auth-token');
+
+        return [
+            'user' => $user,
+            'token' => $token->plainTextToken,
+        ];
     }
 }
