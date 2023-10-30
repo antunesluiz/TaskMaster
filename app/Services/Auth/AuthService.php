@@ -33,12 +33,24 @@ class AuthService
     {
         $user = $this->userRepository->findByEmail($credentials['email']);
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if (!$user || !auth()->attempt($credentials)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
         $token = $user->createToken('auth-token');
 
         return ['token' => $token->plainTextToken];
+    }
+
+    /**
+     * Logout the authenticated user.
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        auth()->user()->currentAccessToken()->delete();
+        
+        return response()->json(['message' => 'Logged out successfully'], 200);
     }
 }

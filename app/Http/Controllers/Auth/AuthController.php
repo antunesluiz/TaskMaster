@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\AuthService;
+use App\Services\Auth\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -33,7 +33,17 @@ class AuthController extends Controller
     public function login(Request $request) : JsonResponse|array
     {
         $credentials = $request->only(['email', 'password']);
-        
+
         return $this->authService->login($credentials);
+    }
+
+    /**
+     * Logout the authenticated user and invalidate the token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        return $this->authService->logout();
     }
 }
