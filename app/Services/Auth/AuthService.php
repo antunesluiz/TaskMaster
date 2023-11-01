@@ -17,7 +17,7 @@ class AuthService
     private UserRepository $userRepository;
 
     /**
-     * AuthService constructor.
+     * AuthService constructor
      *
      * @param UserRepository $userRepository
      */
