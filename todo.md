@@ -3,10 +3,10 @@
 ## Recursos Principais
 
 ### 1. Autenticação de Usuário com Sanctum
-- [ ] Login
-- [ ] Logout
-- [ ] Registro
-- [ ] Recuperação de Senha
+- [X] Login
+- [X] Logout
+- [X] Registro
+- [X] Recuperação de Senha
 
 ### 2. CRUD de Tarefas
 - [ ] Criar tarefa
@@ -57,8 +57,8 @@
 ## Cronograma Estimado
 
 ### Semana 1-2
-- [ ] Configuração inicial e instalação
-- [ ] Implementação da autenticação com Sanctum
+- [X] Configuração inicial e instalação
+- [X] Implementação da autenticação com Sanctum
 
 ### Semana 3-4
 - [ ] Desenvolvimento do CRUD de Tarefas
