@@ -58,7 +58,7 @@
 
 ### Semana 1-2
 - [X] Configuração inicial e instalação
-- [] Implementação da autenticação com Sanctum
+- [X] Implementação da autenticação com Sanctum
 
 ### Semana 3-4
 - [ ] Desenvolvimento do CRUD de Tarefas
