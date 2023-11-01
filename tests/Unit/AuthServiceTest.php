@@ -3,6 +3,10 @@
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\Auth\AuthService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Laravel\Sanctum\Sanctum;
 
 beforeEach(function () {
@@ -56,4 +60,36 @@ it('can register a new user', function () {
    expect($result)->toHaveKey('token');
    expect($result['user']->name)->toBe($user->name);
    expect($result['user']->email)->toBe($user->email);
+});
+
+it('can request password reset link', function () {
+   $payload = ['email' => $this->user->email];
+   
+   $response = $this->postJson('/api/forgot-password', $payload);
+   
+   $response->assertStatus(200)
+      ->assertJson(['status' => 'We have emailed your password reset link.']);
+});
+
+it('can reset password', function () {  
+   Mail::fake();
+
+   Password::sendResetLink(['email' => $this->user->email]);
+
+   Mail::assertSent(ResetPassword::class, function ($mail) use (&$token) {
+       $token = $mail->token;
+       return $mail->hasTo($this->user->email);
+   });
+
+   $payload = [
+      'token' => $token,
+      'email' => $this->user->email,
+      'password' => 'new-password',
+      'password_confirmation' => 'new-password'
+   ];
+   
+   $response = $this->postJson('/api/reset-password', $payload);
+   
+   $response->assertStatus(200)
+      ->assertJson(['status' => 'Password reset']);
 });

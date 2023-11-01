@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
 class AuthService
@@ -73,5 +74,29 @@ class AuthService
             'user' => $user,
             'token' => $token->plainTextToken,
         ];
+    }
+
+    /**
+     * Handle user password reset request.
+     *
+     * @param array $credentials
+     * @return string
+     */
+    public function forgotPassword(array $credentials): string
+    {
+        return Password::sendResetLink($credentials);
+    }
+
+    /**
+     * Reset the user's password.
+     *
+     * @param array $credentials
+     * @return string
+     */
+    public function resetPassword(array $credentials): string
+    {
+        return Password::reset($credentials, function ($user, $password) {
+            $this->userRepository->updatePassword($user, $password);
+        });
     }
 }

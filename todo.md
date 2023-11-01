@@ -3,10 +3,10 @@
 ## Recursos Principais
 
 ### 1. Autenticação de Usuário com Sanctum
-- [ ] Login
-- [ ] Logout
-- [ ] Registro
-- [ ] Recuperação de Senha
+- [X] Login
+- [X] Logout
+- [X] Registro
+- [X] Recuperação de Senha
 
 ### 2. CRUD de Tarefas
 - [ ] Criar tarefa

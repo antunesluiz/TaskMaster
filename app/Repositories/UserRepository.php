@@ -32,4 +32,17 @@ class UserRepository
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    /**
+     * Update the user's password.
+     *
+     * @param User $user
+     * @param string $password
+     * @return void
+     */
+    public function updatePassword(User $user, string $password): void
+    {
+        $user->password = Hash::make($password);
+        $user->save();
+    }
 }
