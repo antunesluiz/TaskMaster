@@ -9,10 +9,10 @@
 - [X] Recuperação de Senha
 
 ### 2. CRUD de Tarefas
-- [ ] Criar tarefa
-- [ ] Listar tarefas
-- [ ] Editar tarefa
-- [ ] Excluir tarefa
+- [X] Criar tarefa
+- [X] Listar tarefas
+- [X] Editar tarefa
+- [X] Excluir tarefa
 
 ### 3. Status da Tarefa
 - [ ] Pendente
